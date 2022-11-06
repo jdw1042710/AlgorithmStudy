@@ -4,6 +4,7 @@
         "__bit_reference": "cpp",
         "ostream": "cpp",
         "vector": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "iostream": "cpp"
     }
 }
