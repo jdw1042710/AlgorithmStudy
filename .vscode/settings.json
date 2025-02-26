@@ -7,6 +7,9 @@
         "limits": "cpp",
         "iostream": "cpp",
         "iosfwd": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "queue": "cpp",
+        "string": "cpp",
+        "ios": "cpp"
     }
 }
