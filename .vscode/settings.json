@@ -10,6 +10,7 @@
         "sstream": "cpp",
         "queue": "cpp",
         "string": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "stack": "cpp"
     }
 }

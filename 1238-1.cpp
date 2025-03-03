@@ -6,7 +6,7 @@
 using namespace std;
 
 int n, m, x;
-const long long INF = (1 << 14);
+const long long INF = (1 << 29);
 // vector<vector<int>> graph;
 vector<vector<long long>> cache;
 
@@ -55,7 +55,7 @@ void Solution()
     long long result = 0;
     for(int i = 0; i < n; ++i)
     {
-        result = max(result, cache[i][x] + cache[x][i]);
+        result = max(result, cache[i][x - 1] + cache[x - 1][i]);
     }
 
     cout << result;
