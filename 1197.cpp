@@ -1,79 +1,86 @@
 #include <iostream>
 #include <vector>
-#include <set>
 #include <queue>
 
 using namespace std;
 
-struct edge{
+int V, E;
+vector<int> parents;
+
+struct Edge{
     pair<int, int> node;
-    long long val;
+    int val;
 };
 
-struct cmp{
-    bool operator()(edge l, edge r){
+struct Compare{
+    bool operator()(Edge l, Edge r){
         return l.val > r.val;
     }
 };
 
-int findParent(int a, const vector<int>& nodes){
-    if (nodes[a] == a){
+int FindParent(int a){
+    if (parents[a] == a){
         return a;
     }
-    return findParent(nodes[a], nodes);
+    return FindParent(parents[a]);
 }
 
-bool isCycle(const edge& e, const vector<int>& nodes){
-    int p1 = findParent(e.node.first, nodes);
-    int p2 = findParent(e.node.second, nodes);
+bool IsCycle(const Edge& e){
+    int p1 = FindParent(e.node.first);
+    int p2 = FindParent(e.node.second);
     //cout << "Cycle 여부 : " << p1 == p2 << endl;
     return p1 == p2;
 }
 
-void merge(int a, int b, vector<int>& nodes){
-    int p1 = findParent(a, nodes);
-    int p2 = findParent(b, nodes);
-    nodes[p2] = p1;
+void Merge(int a, int b){
+    int p1 = FindParent(a);
+    int p2 = FindParent(b);
+    if(p1 < p2)
+    {
+        parents[p1] = p2;
+    }
+    else
+    {
+        parents[p2] = p1;
+    }
 }
 
+void Solution();
+
 int main(){
-    int V, E, cnt = 0;
-    long long sum = 0;
+    cin.tie(NULL);
+    ios::sync_with_stdio(false);
+
     cin >> V >> E;
     cin.ignore();
-    vector<int> nodes(V + 1);
-    priority_queue<edge, vector<edge>, cmp> pq;
-    for(int i = 1; i < V + 1; i++){
-        nodes[i] = i;
+    parents = vector<int> (V + 1);
+    for(int i = 1; i <= V; ++i){
+        parents[i] = i;
     }
-    for (int i = 0; i < E; i++){
-        long long a, b, c;
-        edge temp;
-        cin >> a >> b >> c;
+    Solution();
+}
+
+void Solution()
+{
+    priority_queue<Edge, vector<Edge>, Compare> pq;
+    for (int i = 0; i < E; ++i)
+    {
+        int a, b, value;
+        cin >> a >> b >> value;
         cin.ignore();
-        temp = {{a, b}, c};
-        pq.push(temp);
+        pq.push({{a, b}, value});
     }
-    while(cnt < V - 1){
-        edge min_edge = pq.top();
-        /*
-        cout << ""<< "선택된 노드 (" << nodes.size() << "개) : ";
-        for(auto i : nodes){
-            cout << i << " ";
-        }
-        cout << endl;
-        cout << min_edge.node.first << " " << min_edge.node.second << endl; 
-        */
+    int num_of_edges = 0;
+    long long weight = 0;
+    while(num_of_edges < V - 1)
+    {
+        Edge min_edge = pq.top();
         pq.pop();
-        if(!isCycle(min_edge, nodes)){
-            merge(min_edge.node.first, min_edge.node.second, nodes);
-            sum += min_edge.val;
-            cnt++;
+        if(!IsCycle(min_edge)){
+            Merge(min_edge.node.first, min_edge.node.second);
+            weight += min_edge.val;
+            ++num_of_edges;
         }
-        /*
-        string ss;
-        getline(cin,ss);
-        */
     }
-    cout << sum << endl;
+    cout << weight;
 }
