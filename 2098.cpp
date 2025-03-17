@@ -5,14 +5,14 @@
 using namespace std;
 
 int N;
-const long long INF = 1000000 * 17 + 1;
+const long long INF = 987654321;
 const int startCity = 0;
 vector<vector<int>> graph;
 vector<vector<long long>> cache;
 
 void Solution();
 
-long long TSP(int city, int visited);
+long long TSP(int city, long long visited);
 
 int main()
 {
@@ -38,20 +38,21 @@ int main()
 
 void Solution()
 {
-    cache = vector<vector<long long>>(N, vector<long long>(1 << N, INF));
+    cache = vector<vector<long long>>(N, vector<long long>(1 << N, -1));
     cout << TSP(startCity, 1 << startCity);
 }
 
-long long TSP(int city, int visited)
+long long TSP(int city, long long visited)
 {
-    if(visited == (1 << N) - 1) return graph[city][startCity];
+    if(visited == (1 << N) - 1) return graph[city][startCity] == 0 ? INF : graph[city][startCity];
     long long& ret = cache[city][visited];
-    if(ret != INF) return ret;
+    if(ret != -1) return ret;
     // cout << "visited: " << city << endl;;
+    ret = INF;
     for(int next = 0; next < N; ++next)
     {
-        if(visited & (1 << next)) continue;
-        ret = min(ret, graph[city][next] + TSP(next, visited | 1 << next));
+        if(visited & (1 << next) || graph[city][next] == 0) continue;
+        ret = min(ret, (long long)graph[city][next] + TSP(next, visited | 1 << next));
     }
     return ret;
 }
