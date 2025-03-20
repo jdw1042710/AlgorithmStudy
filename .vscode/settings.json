@@ -11,6 +11,7 @@
         "queue": "cpp",
         "string": "cpp",
         "ios": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "__locale": "cpp"
     }
 }
