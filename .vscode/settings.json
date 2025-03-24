@@ -12,6 +12,7 @@
         "string": "cpp",
         "ios": "cpp",
         "stack": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "initializer_list": "cpp"
     }
 }
