@@ -17,11 +17,10 @@ int main(){
     Solution();
 }
 
-// 푸는중인 문제
 void Solution()
 {
     vector<vector<int>> graph = vector<vector<int>>(N + 1, vector<int>());
-    priority_queue<int, vector<int>, greater<int>> pq;
+    queue<int> pq;
     vector<int> inDegree = vector<int>(N + 1, 0);
 
     for(int i = 0; i < M; ++i)
@@ -49,24 +48,25 @@ void Solution()
             pq.push(i);
     }
     vector<int> result;
-    int mask = 0;
     while(!pq.empty())
     {
-        int num = pq.top();
+        int num = pq.front();
         pq.pop();
+        result.push_back(num);
         for(auto adj : graph[num])
         {
-            if(mask & (1 << num)) continue;
             --inDegree[adj];
             if(inDegree[adj] == 0)
                 pq.push(adj);
         }
-        result.push_back(num);
-        mask |= (1 << num);
+
     }
-    if(mask & (1 << (N + 1)) - 2)
+    if(result.size() == N)
     {
-        for(auto num : result) cout << num << '\n';
+        for(auto num : result) 
+        {
+            cout << num << '\n';
+        }
     }
     else
     {
