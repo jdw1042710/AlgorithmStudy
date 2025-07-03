@@ -17,6 +17,7 @@
         "xutility": "cpp",
         "sstream": "cpp",
         "xiosbase": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "string": "cpp"
     }
 }
